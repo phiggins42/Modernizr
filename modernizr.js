@@ -97,6 +97,7 @@ window.Modernizr = (function(window,doc,undefined){
     csstransitions = 'csstransitions',
     fontface = 'fontface',
     geolocation = 'geolocation',
+    dataset = 'dataset',
     video = 'video',
     audio = 'audio',
     input = 'input',
@@ -337,6 +338,16 @@ window.Modernizr = (function(window,doc,undefined){
     //   which false positives.
     tests[hashchange] = function() {
       return isEventSupported(hashchange, window) && ( document.documentMode === undefined || document.documentMode > 7 );
+    };
+
+    /*   Modernizr.dataset:
+     *   node.dataset.somethingElse transfers from <a data-something-else="a"></a> as defined by:
+     *   http://www.w3.org/TR/html5/elements.html#custom-data-attribute
+     *   node.getAttribute("data-something-else") == "a" could be a different test if this is false?
+     */
+    tests[dataset] = function() {
+      f.setAttribute("data-a-b", dataset);
+      return !!(f.dataset && f.dataset.aB == dataset);
     };
 
     tests[historymanagement] = function() {
